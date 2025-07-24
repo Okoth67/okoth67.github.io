@@ -1,7 +1,7 @@
-title: Your Blog Name
-description: A brief description of your blog
+title: NLP/LLM, Okoth67
+description: Exploring the fascinating world of Natural Language Processing and Large Language Models. Join me as I document my learning journey, share insights from NLP research, and showcase hands-on projects with transformers, fine-tuning, and AI applications.
 baseurl: ""
-url: "https://yourusername.github.io"
+url: "https://Okoth67.github.io"
 
 # Build settings
 markdown: kramdown
