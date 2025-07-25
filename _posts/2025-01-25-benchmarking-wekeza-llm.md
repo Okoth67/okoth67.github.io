@@ -2,20 +2,22 @@
 layout: post
 title: "Benchmarking Wekeza LLM with IFScore"
 date: 2025-01-25
-categories: [machine-learning, finance, kenya]
+categories: [NLP, finance, kenya]
 tags: [llm, benchmark, distilgpt2, ifscore]
 ---
 # Benchmarking Wekeza LLM with IFScore: Measuring Kenyan Investment Report Generation
 
 ## 📌 Problem Statement
 
-As part of developing Wekeza LLM—a fine-tuned version of DistilGPT2 designed to generate concise Kenyan investment reports—I wanted to evaluate how effectively the model integrates domain-specific financial concepts in its outputs.
+As part of developing Wekeza LLM, a fine-tuned version of DistilGPT2 designed to generate concise Kenyan investment reports, I wanted to evaluate how effectively the model integrates domain-specific financial concepts in its outputs.
 
-Inspired by the paper [**IFScore: Measuring How Well LLMs Follow Instructions Using Keyword Grounding**](https://arxiv.org/abs/2507.11538), I recreated and adapted the IFScore benchmark to measure how well my model follows investment prompts containing key Kenyan financial terms like "mpesa", "nssf", and "chama".
+Inspired by the paper [**IFScore: Measuring How Well LLMs Follow Instructions Using Keyword Grounding**](https://arxiv.org/abs/2507.11538), I recreated and adapted the IFScore benchmark to measure how well my model follows investment prompts containing key Kenyan financial terms like "mpesa","Money Market Fund", "Unit Trust", "Capital Markets Authority (CMA)", "Nairobi Securities Exchange (NSE)", "SACCO", "Treasury Bills (T-Bills)", "Treasury Bonds (T-Bonds)", "Dividends", "Collective Investment Scheme (CIS)", "Yield (Effective Annual Yield - EAY)",  "nssf" and "chama". etc.
+
+
 
 ## 📚 Background: The IFScore Research
 
-The [IFScore paper](https://arxiv.org/abs/2507.11538) addresses a critical challenge in modern LLM deployment: **how many instructions can models actually handle before performance meaningfully degrades?** As production systems increasingly require LLMs to follow dozens or hundreds of simultaneous instructions—from content guidelines to compliance standards—understanding these limitations becomes essential for reliable operation.
+The [IFScore paper](https://arxiv.org/abs/2507.11538) addresses a critical challenge in modern LLM deployment: **how many instructions can models actually handle before performance meaningfully degrades?** As production systems increasingly require LLMs to follow dozens or hundreds of simultaneous instructions—from content guidelines to compliance standards, understanding these limitations becomes essential for reliable operation.
 
 The researchers introduced IFScale, a benchmark using 500 keyword-inclusion instructions for business report writing, revealing that even frontier models achieve only 68% accuracy at maximum instruction density. Their findings show distinct performance degradation patterns based on model size and reasoning capability, with models exhibiting bias towards earlier instructions.
 
@@ -31,7 +33,7 @@ It calculates:
 
 ## 🔍 Why This Matters for Domain-Specific Models
 
-The challenge identified in the IFScore research—that models struggle with multiple simultaneous instructions—is particularly acute for specialized domains like Kenyan finance. Investment reports must accurately incorporate various financial instruments (unit trusts, money markets), regulatory bodies (CMA, CBK), and local payment systems (M-Pesa, chamas) while maintaining coherent, professional language.
+The challenge identified in the IFScore research that models struggle with multiple simultaneous instructions, is particularly acute for specialized domains like Kenyan finance. Investment reports must accurately incorporate various financial instruments (unit trusts, money markets), regulatory bodies (CMA, CBK), and local payment systems (M-Pesa, chamas) while maintaining coherent, professional language.
 
 By adapting IFScore for my use case, I could measure whether my fine-tuned DistilGPT2 model successfully grounds these domain-specific terms, even when multiple concepts need to be addressed in a single generation. This evaluation helps validate the model's readiness for real-world investment advisory applications.
 
@@ -39,7 +41,7 @@ By adapting IFScore for my use case, I could measure whether my fine-tuned Disti
 
 ### ✅ Step 1: Set Up the Environment
 
-We loaded our fine-tuned DistilGPT2 model using Hugging Face's transformers pipeline:
+I loaded my fine-tuned DistilGPT2 model using Hugging Face's transformers pipeline:
 
 ```python
 from transformers import pipeline
@@ -98,7 +100,7 @@ for num_keywords in range(1, 6):
 
 ### 📊 Step 4: Compute IFScore for Each Output
 
-We computed the score for each response based on how many of the prompt's keywords appeared in the text.
+I computed the score for each response based on how many of the prompt's keywords appeared in the text.
 
 ```python
 from collections import defaultdict
@@ -127,7 +129,7 @@ average_ifscores = {
 
 ### 📈 Step 5: Visualize the IFScore
 
-We plotted IFScore vs number of keywords in prompt:
+I plotted IFScore vs number of keywords in prompt:
 
 ```python
 import matplotlib.pyplot as plt
@@ -153,8 +155,7 @@ plt.show()
 4 keyword(s): IFScore = 0.183
 5 keyword(s): IFScore = 0.173
 ```
-
-✅ As expected, IFScore drops as the number of keywords in the prompt increases—highlighting the challenge of grounding multiple concepts in a single generation.
+ As expected, IFScore drops as the number of keywords in the prompt increases highlighting the challenge of grounding multiple concepts in a single generation.
 
 ## 🎓 Learning Outcomes
 
@@ -172,4 +173,4 @@ This project helped me:
 
 ## 📝 Writing Notes
 
-*Like any good data scientist, I believe in using the right tools for the job. This blog post was enhanced with AI assistance—Grammarly helped polish the grammar, and ChatGPT helped structure the narrative flow. Because let's be honest, if you're building LLMs, you might as well use them to write about building LLMs! 🤖✍️*
+*Like any good NLP student, I believe in using the right tools for the job. This blog post, being my first of 21,  was enhanced with AI assistance, Grammarly helped polish the grammar while ChatGPT helped structure the narrative flow. Because let's be honest, if you're building LLMs, you might as well use them to write about building LLMs! 🤖✍️*
